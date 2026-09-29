@@ -10,7 +10,7 @@
     },
     "devUrl": "http://localhost:1420",
     "beforeBuildCommand": {
-      "script": "npm ci && npm run build",
+      "script": "npm run build",
       "cwd": "../frontend"
     },
     "frontendDist": "../frontend/dist"
