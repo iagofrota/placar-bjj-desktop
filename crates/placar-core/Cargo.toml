@@ -1,0 +1,8 @@
+[package]
+name = "placar-core"
+version = "0.1.0"
+description = "Domínio puro do placar de Jiu-Jitsu (regras, cronômetro, estado da luta), sem I/O e sem Tauri"
+authors = ["Iago Olímpio Frota <iagofrota10@gmail.com>"]
+edition = "2021"
+
+[dependencies]
