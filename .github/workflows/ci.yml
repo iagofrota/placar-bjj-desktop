@@ -138,5 +138,5 @@ jobs:
           cache-dependency-path: frontend/package-lock.json
       - run: npm ci
         working-directory: frontend
-      - name: cargo build --release (compiles the Tauri app, no bundling)
-        run: cargo build --workspace --release
+      - name: tauri build --no-bundle (roda beforeBuildCommand + cargo build --release)
+        run: frontend/node_modules/.bin/tauri build --no-bundle

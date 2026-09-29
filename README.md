@@ -13,7 +13,9 @@ placar em cima desta base.
 ## Pré-requisitos
 
 - [Rust](https://www.rust-lang.org/tools/install) (toolchain `stable`, via `rustup`)
-- [Node.js](https://nodejs.org/) 20 ou mais recente, com `npm`
+- [Node.js](https://nodejs.org/) `^22.22.2 || ^24.15.0 || >=26.0.0`, com `npm`
+  (exigência mais estrita do lockfile do frontend — jsdom e afins; ver
+  `frontend/package.json#engines`)
 - As [dependências de sistema do Tauri](https://tauri.app/start/prerequisites/)
   para o seu sistema operacional (no Linux, os pacotes de desenvolvimento do
   WebKitGTK; no Windows, o WebView2 — já vem instalado no Windows 10/11
