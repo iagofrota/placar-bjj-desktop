@@ -5,12 +5,12 @@
   "identifier": "com.iagofrota.placarbjj",
   "build": {
     "beforeDevCommand": {
-      "script": "npm run dev",
+      "script": "npm install && npm run dev",
       "cwd": "../frontend"
     },
     "devUrl": "http://localhost:1420",
     "beforeBuildCommand": {
-      "script": "npm run build",
+      "script": "npm install && npm run build",
       "cwd": "../frontend"
     },
     "frontendDist": "../frontend/dist"

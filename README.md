@@ -29,8 +29,10 @@ cargo tauri dev
 (Rode a partir da raiz do repositório — o Tauri CLI encontra `src-tauri/`
 sozinho.)
 
-Isso instala as dependências do frontend automaticamente na primeira vez,
-sobe o Vite e abre a janela `Placar BJJ`.
+Isso instala as dependências do frontend automaticamente antes de cada
+execução (`npm install`, rápido quando já estão atualizadas), sobe o Vite e
+abre a janela `Placar BJJ`. Não é preciso rodar `npm install` manualmente em
+`frontend/` antes.
 
 ## Testes
 
