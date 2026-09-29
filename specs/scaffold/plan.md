@@ -99,8 +99,8 @@ README.md
 **Structure Decision**: aplicativo desktop de projeto único (não é
 frontend+backend clássico) — o "backend" é o próprio processo Tauri em Rust,
 e o domínio puro fica isolado em `crates/placar-core` para poder ser testado
-sem WebView e sem I/O. Este é o layout de que as ondas 2–4 (definido na
-Orientation Spec do journey) dependem; mudar os caminhos aqui quebraria a
+sem WebView e sem I/O. Este é o layout do qual as próximas tarefas do
+roadmap deste repositório dependem; mudar os caminhos aqui quebraria a
 paralelização delas.
 
 ## Complexity Tracking

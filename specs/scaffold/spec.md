@@ -169,7 +169,7 @@ público, mas não bloqueia o uso técnico do app.
   `placar-core`.
 - **FR-010**: O histórico git, a branch remota, o PR e os arquivos versionados
   MUST NOT conter nenhum identificador do ferramental usado para construir o
-  repositório (nomes de agente, de journey, etc.) — autoria de commit sempre
+  repositório — autoria de commit sempre
   `Iago Olímpio Frota <iagofrota10@gmail.com>`.
 
 ### Key Entities
