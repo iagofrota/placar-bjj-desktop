@@ -2,6 +2,14 @@ import type { Dictionary } from "./types";
 
 /** Portado de `lang/en/app_mesa.php` da plataforma, só as chaves do placar (`keys.ts`). */
 export const en: Dictionary = {
+  app: {
+    language_label: "Language",
+    languages: {
+      pt_BR: "Portuguese",
+      en: "English",
+      es: "Spanish",
+    },
+  },
   side: {
     white: "White",
     blue: "Blue",

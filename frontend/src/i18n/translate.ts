@@ -1,8 +1,12 @@
+import type { AppKey } from "./app_keys";
 import { en } from "./en";
 import { es } from "./es";
 import type { PlacarKey } from "./keys";
 import { ptBR } from "./pt_BR";
 import type { Dictionary, Locale, Replacements } from "./types";
+
+/** Toda chave traduzível: as do placar da plataforma mais as só do app. */
+export type TranslationKey = PlacarKey | AppKey;
 
 export const LOCALES: readonly Locale[] = ["pt_BR", "en", "es"];
 
@@ -53,7 +57,11 @@ export function replacePlaceholders(text: string, replacements: Replacements): s
   return text.replace(pattern, (placeholder) => values.get(placeholder) ?? placeholder);
 }
 
-/** Texto do placar no idioma pedido. Chave que não existe é erro, não texto vazio. */
-export function translate(locale: Locale, key: PlacarKey, replacements: Replacements = {}): string {
+/** Texto no idioma pedido. Chave que não existe é erro, não texto vazio. */
+export function translate(
+  locale: Locale,
+  key: TranslationKey,
+  replacements: Replacements = {},
+): string {
   return replacePlaceholders(lookup(DICTIONARIES[locale], key), replacements);
 }

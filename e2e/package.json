@@ -1,0 +1,20 @@
+{
+  "name": "placar-bjj-desktop-e2e",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "description": "e2e do binário Tauri real via tauri-driver + WebdriverIO",
+  "scripts": {
+    "test": "wdio run ./wdio.conf.js",
+    "test:layout": "playwright test",
+    "test:layout:native": "wdio run ./wdio.layout.conf.js"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.56.0",
+    "@wdio/cli": "^9.20.0",
+    "@wdio/local-runner": "^9.20.0",
+    "@wdio/mocha-framework": "^9.20.0",
+    "@wdio/spec-reporter": "^9.20.0",
+    "webdriverio": "^9.20.0"
+  }
+}
