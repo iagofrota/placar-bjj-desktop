@@ -1,0 +1,21 @@
+/*
+ * Tokens de cor do placar. Único arquivo de `frontend/src` com literal de cor.
+ * Deriva de `docs/design-tokens.md`, que é a fonte; um teste barra divergência.
+ */
+:root {
+  --side-white: #F8FAFC;
+  --side-white-fg: #0F1729;
+  --side-blue: #0B64F4;
+  --side-blue-fg: #FFFFFF;
+  --score-points: #1F7A40;
+  --score-advantage: #CB920B;
+  --score-penalty: #C11F1F;
+  --score-submission: #DB5E06;
+  --arena-black: #0A0A0A;
+  --paper: #F8F8F7;
+  --ink: #121621;
+  --ink-faint: #89909F;
+  --card: #FFFFFF;
+  --line: #DCDFE5;
+  --line-soft: #E8E9ED;
+}
