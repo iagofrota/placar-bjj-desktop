@@ -55,7 +55,7 @@ describe("createTauriClient", () => {
     listen.mockResolvedValue(unlisten);
     const client = createTauriClient();
 
-    const received = [];
+    const received: unknown[] = [];
     const off = client.onState((s) => received.push(s));
     expect(listen).toHaveBeenCalledWith("scoreboard://state", expect.any(Function));
 
@@ -74,7 +74,7 @@ describe("createTauriClient", () => {
     listen.mockResolvedValue(unlisten);
     const client = createTauriClient();
 
-    const calls = [];
+    const calls: number[] = [];
     const off = client.onBeep(() => calls.push(1));
     expect(listen).toHaveBeenCalledWith("scoreboard://beep", expect.any(Function));
 
