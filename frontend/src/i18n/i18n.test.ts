@@ -1,8 +1,12 @@
 import { describe, expect, it } from "vitest";
+import { APP_KEYS } from "./app_keys";
 import { extraKeys, flatten, missingKeys, placeholdersOf } from "./completeness";
 import { PLACAR_KEYS } from "./keys";
 import { DICTIONARIES, LOCALES, replacePlaceholders, translate } from "./translate";
 import type { Dictionary } from "./types";
+
+/** As telas do app usam as chaves do placar mais as próprias do app. */
+const REQUIRED_KEYS = [...PLACAR_KEYS, ...APP_KEYS];
 
 function without(dictionary: Dictionary, path: string): Dictionary {
   const [head, ...rest] = path.split(".");
@@ -16,11 +20,22 @@ function without(dictionary: Dictionary, path: string): Dictionary {
 }
 
 describe("i18n do placar", () => {
-  it("dicionarios_pt_BR_en_es_tem_todas_as_chaves_do_placar", () => {
+  it("dicionarios_pt_BR_en_es_tem_todas_as_chaves_do_placar_e_do_app", () => {
     for (const locale of LOCALES) {
-      expect(missingKeys(DICTIONARIES[locale], PLACAR_KEYS), locale).toEqual([]);
-      expect(extraKeys(DICTIONARIES[locale], PLACAR_KEYS), locale).toEqual([]);
+      expect(missingKeys(DICTIONARIES[locale], REQUIRED_KEYS), locale).toEqual([]);
+      expect(extraKeys(DICTIONARIES[locale], REQUIRED_KEYS), locale).toEqual([]);
     }
+  });
+
+  it("chaves_de_app_sao_separadas_e_traduzidas_nos_tres_idiomas", () => {
+    expect(APP_KEYS).toContain("app.language_label");
+    for (const locale of LOCALES) {
+      expect(missingKeys(DICTIONARIES[locale], APP_KEYS), locale).toEqual([]);
+    }
+    // os nomes das línguas mudam entre idiomas (P9)
+    expect(translate("pt_BR", "app.languages.en")).toBe("Inglês");
+    expect(translate("en", "app.languages.en")).toBe("English");
+    expect(translate("es", "app.languages.en")).toBe("Inglés");
   });
 
   it("chaves_do_placar_sao_as_do_avulso_e_dos_componentes_dele", () => {
@@ -49,7 +64,7 @@ describe("i18n do placar", () => {
   it("teste_de_completude_acusa_chave_sobrando", () => {
     const extra: Dictionary = { ...DICTIONARIES.en, offline: { lost_write: "x" } };
 
-    expect(extraKeys(extra, PLACAR_KEYS)).toEqual(["offline.lost_write"]);
+    expect(extraKeys(extra, REQUIRED_KEYS)).toEqual(["offline.lost_write"]);
   });
 
   it("placeholders_de_en_e_es_batem_com_pt_BR", () => {

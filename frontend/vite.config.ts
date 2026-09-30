@@ -39,7 +39,13 @@ export default defineConfig(() => ({
       provider: "v8",
       reporter: ["text", "lcov"],
       include: ["src/**/*.{ts,tsx}"],
-      exclude: ["src/__tests__/**", "src/vite-env.d.ts"],
+      exclude: [
+        "src/__tests__/**",
+        "src/vite-env.d.ts",
+        // Cola Tauri (só roda com webview real, coberta pelo e2e) e infra de teste.
+        "src/ipc/tauri-client.ts",
+        "src/test-support/**",
+      ],
       thresholds: {
         lines: 80,
         functions: 80,
