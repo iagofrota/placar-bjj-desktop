@@ -1,0 +1,38 @@
+{
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+  "release-type": "simple",
+  "include-component-in-tag": false,
+  "include-v-in-tag": true,
+  "bump-minor-pre-major": true,
+  "bump-patch-for-minor-pre-major": false,
+  "prerelease": false,
+  "changelog-sections": [
+    { "type": "feat", "section": "Novidades" },
+    { "type": "fix", "section": "Correções" },
+    { "type": "perf", "section": "Desempenho" },
+    { "type": "revert", "section": "Reversões" },
+    { "type": "docs", "section": "Documentação", "hidden": true },
+    { "type": "style", "section": "Estilo", "hidden": true },
+    { "type": "refactor", "section": "Refatoração", "hidden": true },
+    { "type": "test", "section": "Testes", "hidden": true },
+    { "type": "build", "section": "Build", "hidden": true },
+    { "type": "ci", "section": "CI", "hidden": true },
+    { "type": "chore", "section": "Manutenção", "hidden": true }
+  ],
+  "packages": {
+    ".": {
+      "package-name": "placar-bjj-desktop",
+      "changelog-path": "CHANGELOG.md",
+      "extra-files": [
+        { "type": "toml", "path": "src-tauri/Cargo.toml", "jsonpath": "$.package.version" },
+        { "type": "toml", "path": "crates/placar-core/Cargo.toml", "jsonpath": "$.package.version" },
+        { "type": "toml", "path": "Cargo.lock", "jsonpath": "$.package[?(@.name.value=='placar-bjj-desktop')].version" },
+        { "type": "toml", "path": "Cargo.lock", "jsonpath": "$.package[?(@.name.value=='placar-core')].version" },
+        { "type": "json", "path": "frontend/package.json", "jsonpath": "$.version" },
+        { "type": "json", "path": "frontend/package-lock.json", "jsonpath": "$.version" },
+        { "type": "json", "path": "frontend/package-lock.json", "jsonpath": "$.packages[''].version" },
+        { "type": "json", "path": "src-tauri/tauri.conf.json", "jsonpath": "$.version" }
+      ]
+    }
+  }
+}
