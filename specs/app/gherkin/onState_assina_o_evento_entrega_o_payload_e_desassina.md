@@ -2,8 +2,10 @@
 
 ```gherkin
 Funcionalidade: Cliente Tauri (tauri-client.ts)
-  Cenário: onState assina o evento entrega o payload e desassina
-    Dado o cliente Tauri e o listen mockado
-    Quando o comportamento coberto pelo teste `onState_assina_o_evento_entrega_o_payload_e_desassina` é exercido
-    Então assinar entrega o payload do estado e a função devolvida desassina
+  Cenário: onState assina o evento, entrega o payload e desassina
+    Dado o cliente Tauri com listen mockado
+    Quando onState registra um callback
+    Então assina o evento "scoreboard://state"
+    E ao disparar o evento o payload chega ao callback
+    E chamar a função de retorno desassina exatamente uma vez
 ```

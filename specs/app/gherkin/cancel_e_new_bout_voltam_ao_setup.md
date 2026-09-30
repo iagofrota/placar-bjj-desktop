@@ -2,8 +2,10 @@
 
 ```gherkin
 Funcionalidade: Sessão do placar (scoreboard.rs)
-  Cenário: cancel e new bout voltam ao setup
-    Dado uma sessão de placar sobre o placar-core
-    Quando o comportamento coberto pelo teste `cancel_e_new_bout_voltam_ao_setup` é exercido
-    Então o resultado observado é exatamente o que o teste de mesmo nome verifica
+  Cenário: cancelar e nova luta voltam ao setup
+    Dado uma sessão iniciada
+    Quando é cancelada
+    Então o estágio volta a Setup
+    Quando outra luta é iniciada, encerrada por decisão e então "nova luta" é acionada
+    Então o estágio volta a Setup
 ```

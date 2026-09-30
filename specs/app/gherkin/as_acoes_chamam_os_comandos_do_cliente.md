@@ -2,8 +2,8 @@
 
 ```gherkin
 Funcionalidade: Hook do placar
-  Cenário: as acoes chamam os comandos do cliente
-    Dado o hook ligado a um cliente IPC
-    Quando o comportamento coberto pelo teste `as_acoes_chamam_os_comandos_do_cliente` é exercido
-    Então o resultado observado é exatamente o que o teste de mesmo nome verifica
+  Cenário: as ações do hook chamam os comandos do cliente
+    Dado o hook montado no board
+    Quando se chamam as ações mark, toggleClock, adjustClock, cancel e start
+    Então o cliente recebe mark ("white","point2","add"), adjustClock ("plus10") e start ("Ana","Bia","5")
 ```

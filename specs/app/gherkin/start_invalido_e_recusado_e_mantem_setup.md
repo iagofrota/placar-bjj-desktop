@@ -2,8 +2,9 @@
 
 ```gherkin
 Funcionalidade: Sessão do placar (scoreboard.rs)
-  Cenário: start invalido e recusado e mantem setup
-    Dado uma sessão de placar sobre o placar-core
-    Quando o comportamento coberto pelo teste `start_invalido_e_recusado_e_mantem_setup` é exercido
-    Então o resultado observado é exatamente o que o teste de mesmo nome verifica
+  Cenário: start inválido é recusado e mantém o setup
+    Dado uma sessão nova com o relógio em 0
+    Quando start é chamado com o nome branco vazio
+    Então devolve Err(InvalidSetup)
+    E o estágio da sessão continua em Setup
 ```

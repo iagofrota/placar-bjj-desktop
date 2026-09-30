@@ -2,8 +2,11 @@
 
 ```gherkin
 Funcionalidade: Diálogo de cancelar
-  Cenário: confirmar descarta a luta voltar apenas fecha
-    Dado o diálogo de cancelar a luta
-    Quando o comportamento coberto pelo teste `confirmar_descarta_a_luta_voltar_apenas_fecha` é exercido
-    Então o resultado observado é exatamente o que o teste de mesmo nome verifica
+  Cenário: confirmar descarta a luta e "Voltar" apenas fecha
+    Dado o diálogo de cancelar
+    Quando se clica em "Cancelar" e o diálogo abre ("Cancelar esta luta?")
+    E se clica em "Voltar"
+    Então o diálogo fecha sem chamar onConfirm
+    Quando se reabre e se clica em "Cancelar luta"
+    Então onConfirm é chamado uma vez e o diálogo fecha
 ```

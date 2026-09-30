@@ -2,8 +2,9 @@
 
 ```gherkin
 Funcionalidade: Retrato de estado (view.rs)
-  Cenário: alerta de punicao liga na terceira
-    Dado o domínio placar-core e um relógio injetável
-    Quando o comportamento coberto pelo teste `alerta_de_punicao_liga_na_terceira` é exercido
-    Então o resultado observado é exatamente o que o teste de mesmo nome verifica
+  Cenário: o alerta de punição liga na terceira
+    Dado uma partida iniciada
+    Quando o branco recebe 3 punições
+    Então o branco fica com alerta de punição e 3 punições
+    E o azul continua sem alerta
 ```

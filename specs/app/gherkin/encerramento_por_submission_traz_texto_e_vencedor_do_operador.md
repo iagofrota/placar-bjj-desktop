@@ -2,8 +2,8 @@
 
 ```gherkin
 Funcionalidade: Retrato de estado (view.rs)
-  Cenário: encerramento por submission traz texto e vencedor do operador
-    Dado o domínio placar-core e um relógio injetável
-    Quando o comportamento coberto pelo teste `encerramento_por_submission_traz_texto_e_vencedor_do_operador` é exercido
-    Então o resultado observado é exatamente o que o teste de mesmo nome verifica
+  Cenário: o encerramento por finalização traz o texto e o vencedor do operador
+    Dado uma partida iniciada
+    Quando é encerrada por finalização com o azul como vencedor e o golpe "Armlock"
+    Então o método é "submission", o vencedor é "blue" (Bia) e a finalização é "Armlock"
 ```

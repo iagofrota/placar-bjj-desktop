@@ -2,8 +2,8 @@
 
 ```gherkin
 Funcionalidade: Atalho de espaço
-  Cenário: outra tecla nao alterna
-    Dado o board com o atalho de espaço ligado
-    Quando o comportamento coberto pelo teste `outra_tecla_nao_alterna` é exercido
-    Então o resultado observado é exatamente o que o teste de mesmo nome verifica
+  Cenário: outra tecla não alterna
+    Dado o atalho de espaço registrado e o foco num botão
+    Quando se pressiona Enter em vez de espaço
+    Então o toggle não é chamado
 ```

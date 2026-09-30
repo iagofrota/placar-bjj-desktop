@@ -2,8 +2,8 @@
 
 ```gherkin
 Funcionalidade: Marshalling de IPC (dto.rs)
-  Cenário: valor desconhecido e recusado
-    Dado os argumentos que a UI envia por IPC
-    Quando o comportamento coberto pelo teste `valor_desconhecido_e_recusado` é exercido
-    Então o resultado observado é exatamente o que o teste de mesmo nome verifica
+  Cenário: valor desconhecido é recusado na desserialização
+    Dado os DTOs de lado e de método
+    Quando se tenta desserializar "green" como lado e "tap" como método
+    Então a desserialização falha nos dois casos
 ```

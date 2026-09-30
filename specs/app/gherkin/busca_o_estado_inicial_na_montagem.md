@@ -2,8 +2,8 @@
 
 ```gherkin
 Funcionalidade: Hook do placar
-  Cenário: busca o estado inicial na montagem
-    Dado o hook ligado a um cliente IPC
-    Quando o comportamento coberto pelo teste `busca_o_estado_inicial_na_montagem` é exercido
-    Então o resultado observado é exatamente o que o teste de mesmo nome verifica
+  Cenário: o hook busca o estado inicial na montagem
+    Dado o hook useScoreboard com o cliente no setup
+    Quando é montado
+    Então o estado inicial vira o de setup e getState foi chamado
 ```

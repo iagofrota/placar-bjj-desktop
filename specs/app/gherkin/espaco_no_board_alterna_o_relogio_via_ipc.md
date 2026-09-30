@@ -2,8 +2,8 @@
 
 ```gherkin
 Funcionalidade: Raiz do app
-  Cenário: espaco no board alterna o relogio via ipc
-    Dado o app ligado a um cliente de placar
-    Quando o comportamento coberto pelo teste `espaco_no_board_alterna_o_relogio_via_ipc` é exercido
-    Então o resultado observado é exatamente o que o teste de mesmo nome verifica
+  Cenário: espaço no board alterna o relógio via IPC
+    Dado o App montado no board
+    Quando a barra de espaço é pressionada com o foco no corpo da página
+    Então o cliente recebe a chamada toggleClock
 ```

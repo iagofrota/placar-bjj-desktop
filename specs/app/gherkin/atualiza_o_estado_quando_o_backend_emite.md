@@ -2,8 +2,8 @@
 
 ```gherkin
 Funcionalidade: Hook do placar
-  Cenário: atualiza o estado quando o backend emite
-    Dado o hook ligado a um cliente IPC
-    Quando o comportamento coberto pelo teste `atualiza_o_estado_quando_o_backend_emite` é exercido
-    Então o resultado observado é exatamente o que o teste de mesmo nome verifica
+  Cenário: o hook atualiza o estado quando o backend emite
+    Dado o hook montado com um estado inicial
+    Quando o backend emite um estado de board
+    Então o estado do hook passa a "board"
 ```

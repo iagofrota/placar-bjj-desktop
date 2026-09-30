@@ -2,8 +2,9 @@
 
 ```gherkin
 Funcionalidade: Retrato de estado (view.rs)
-  Cenário: board traz nomes placar e relogio cheio parado
-    Dado o domínio placar-core e um relógio injetável
-    Quando o comportamento coberto pelo teste `board_traz_nomes_placar_e_relogio_cheio_parado` é exercido
-    Então o resultado observado é exatamente o que o teste de mesmo nome verifica
+  Cenário: o board traz nomes, placar e relógio cheio e parado
+    Dado uma partida iniciada com "Ana" e "Bia" por 5 minutos
+    Quando é convertida em StateView
+    Então o estágio é Board com os nomes Ana e Bia
+    E o relógio mostra 300 s ("05:00"), duração 300 s, parado, sem urgência e sem alerta de punição
 ```

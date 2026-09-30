@@ -2,8 +2,9 @@
 
 ```gherkin
 Funcionalidade: Marshalling de IPC (dto.rs)
-  Cenário: delta e ajuste e metodo convertem
-    Dado os argumentos que a UI envia por IPC
-    Quando o comportamento coberto pelo teste `delta_e_ajuste_e_metodo_convertem` é exercido
-    Então o resultado observado é exatamente o que o teste de mesmo nome verifica
+  Cenário: delta, ajuste de relógio e método convertem para o domínio
+    Dado os DTOs de delta, ajuste de relógio e método de encerramento
+    Quando se converte Remove, Minus10 e Wo para o domínio
+    Então viram Delta::Remove, ClockAdjust::Minus10 e EndMethod::Wo
+    E "plus10" e "submission" desserializam como Plus10 e Submission
 ```

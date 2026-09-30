@@ -2,8 +2,8 @@
 
 ```gherkin
 Funcionalidade: Tela do board
-  Cenário: com relogio parado nao ha realce
-    Dado o board renderizado com um estado emitido
-    Quando o comportamento coberto pelo teste `com_relogio_parado_nao_ha_realce` é exercido
-    Então o resultado observado é exatamente o que o teste de mesmo nome verifica
+  Cenário: com o relógio parado não há realce
+    Dado o board com clock_urgent falso
+    Quando é renderizado
+    Então o relógio tem data-urgent "false" e não usa a classe text-score-penalty
 ```

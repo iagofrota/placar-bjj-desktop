@@ -2,8 +2,9 @@
 
 ```gherkin
 Funcionalidade: Marshalling de IPC (dto.rs)
-  Cenário: score kind desserializa os cinco controles
-    Dado os argumentos que a UI envia por IPC
-    Quando o comportamento coberto pelo teste `score_kind_desserializa_os_cinco_controles` é exercido
-    Então o resultado observado é exatamente o que o teste de mesmo nome verifica
+  Cenário: ScoreKind desserializa os cinco tipos de marcação
+    Dado o DTO de tipo de marcação
+    Quando se desserializa "point2", "point3", "point4", "advantage" e "penalty"
+    Então cada um vira o ScoreKindDto correspondente
+    E a conversão para o domínio preserva o tipo
 ```

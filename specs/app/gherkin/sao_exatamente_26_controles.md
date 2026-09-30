@@ -2,8 +2,8 @@
 
 ```gherkin
 Funcionalidade: Contrato dos controles
-  Cenário: sao exatamente 26 controles
-    Dado os rótulos i18n do placar
-    Quando o comportamento coberto pelo teste `sao_exatamente_26_controles` é exercido
-    Então o resultado observado é exatamente o que o teste de mesmo nome verifica
+  Cenário: são exatamente 26 controles
+    Dado os rótulos i18n do placar em pt_BR
+    Quando se monta a lista de nomes de controle do board
+    Então são 10 por lado mais 6 da página, totalizando 26
 ```

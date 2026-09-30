@@ -2,8 +2,11 @@
 
 ```gherkin
 Funcionalidade: Raiz do app
-  Cenário: trocar idioma muda todo o texto sem chave crua
-    Dado o app ligado a um cliente de placar
-    Quando o comportamento coberto pelo teste `trocar_idioma_muda_todo_o_texto_sem_chave_crua` é exercido
-    Então o resultado observado é exatamente o que o teste de mesmo nome verifica
+  Cenário: trocar o idioma muda todo o texto, sem chave crua
+    Dado o App no board em pt_BR, com o botão "Encerrar luta"
+    Quando o idioma muda para en
+    Então o botão passa a "End match"
+    Quando o idioma muda para es
+    Então o botão passa a "Finalizar combate"
+    E o DOM não contém "app_mesa" nem "undefined"
 ```
