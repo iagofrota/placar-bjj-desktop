@@ -5,7 +5,7 @@
   "identifier": "com.iagofrota.placarbjj",
   "build": {
     "beforeDevCommand": {
-      "script": "npm run dev",
+      "script": "npm install && npm run dev",
       "cwd": "../frontend"
     },
     "devUrl": "http://localhost:1420",

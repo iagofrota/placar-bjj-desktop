@@ -38,6 +38,8 @@ export default defineConfig(() => ({
     coverage: {
       provider: "v8",
       reporter: ["text", "lcov"],
+      include: ["src/**/*.{ts,tsx}"],
+      exclude: ["src/__tests__/**", "src/vite-env.d.ts"],
       thresholds: {
         lines: 80,
         functions: 80,
