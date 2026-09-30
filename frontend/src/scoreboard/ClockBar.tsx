@@ -68,14 +68,6 @@ export function ClockBar({
         >
           {board.remaining_display}
         </button>
-        <Button
-          variant="ghost"
-          size="mesa"
-          className={`border-card/20 text-card hover:bg-card/10 ${COMPACT_BUTTON}`}
-          onClick={() => onAdjustClock("plus10")}
-        >
-          {t("clock_bar.increment")}
-        </Button>
       </div>
 
       <div className="flex items-center gap-3">
