@@ -1,0 +1,18 @@
+{
+  "descricao": "Promoção dev → main por merge commit: os commits de dev chegam a main.",
+  "versaoPublicada": "0.1.0",
+  "commits": [
+    {
+      "sha": "m1",
+      "message": "Merge pull request #9 from iagofrota/dev\n\nchore: promove dev para main"
+    },
+    {
+      "sha": "c2",
+      "message": "feat: seletor de idioma"
+    },
+    {
+      "sha": "c1",
+      "message": "fix: relógio não pausa ao zerar"
+    }
+  ]
+}

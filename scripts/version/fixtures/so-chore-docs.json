@@ -1,0 +1,18 @@
+{
+  "descricao": "Só manutenção e documentação: nada que o usuário perceba.",
+  "versaoPublicada": "0.1.0",
+  "commits": [
+    {
+      "sha": "c3",
+      "message": "docs: explica como rodar os testes"
+    },
+    {
+      "sha": "c2",
+      "message": "chore: atualiza dependências"
+    },
+    {
+      "sha": "c1",
+      "message": "docs(readme): corrige link"
+    }
+  ]
+}

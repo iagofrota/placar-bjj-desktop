@@ -1,0 +1,14 @@
+{
+  "descricao": "Mudança incompatível marcada com ! no tipo, antes da 1.0.",
+  "versaoPublicada": "0.1.0",
+  "commits": [
+    {
+      "sha": "c2",
+      "message": "feat!: novo formato de configuração"
+    },
+    {
+      "sha": "c1",
+      "message": "fix: relógio não pausa ao zerar"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "descricao": "Depois da 0.2.0 entrou um feat, saiu o beta v0.3.0-beta.1 e depois um fix. O cálculo estável ignora o beta e parte da 0.2.0.",
+  "versaoPublicada": "0.2.0",
+  "releases": [
+    { "tagName": "v0.3.0-beta.1", "sha": "b1" },
+    { "tagName": "v0.2.0", "sha": "r1" }
+  ],
+  "commits": [
+    { "sha": "c3", "message": "fix: relógio não pausa ao zerar" },
+    { "sha": "b1", "message": "fix: beep duplicado" },
+    { "sha": "c2", "message": "feat: seletor de idioma" },
+    { "sha": "r1", "message": "chore(main): release 0.2.0" },
+    { "sha": "c1", "message": "feat: tela de encerramento" }
+  ]
+}
