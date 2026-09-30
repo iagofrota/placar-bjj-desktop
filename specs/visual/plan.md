@@ -25,9 +25,9 @@ engine mínimo de Node.
 
 ## Ligação ao app
 
-Esta tarefa não altera `index.css` nem `main.tsx`. A tela que consumir as peças importa
-`styles/arena.css` depois de `@import "tailwindcss"`. Sem esse import o Vite não empacota
-as fontes.
+`frontend/src/index.css` importa `styles/arena.css` logo depois de `@import "tailwindcss"`.
+Sem esse import o Vite não empacota as fontes nem gera os utilitários dos tokens.
+`main.tsx` não muda.
 
 ## Verificação
 
