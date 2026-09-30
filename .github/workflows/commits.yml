@@ -37,6 +37,8 @@ jobs:
         working-directory: scripts/version
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # o teste do bootstrap-sha confere que o marco está no histórico
       - uses: actions/setup-node@v4
         with:
           node-version: 22

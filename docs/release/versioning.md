@@ -104,8 +104,11 @@ cresce a cada beta do mesmo alvo: `v0.2.0-beta.1`, depois `v0.2.0-beta.2`.
 ## 5. Antes da 1.0, e a 1.0
 
 - A versão começou em `0.1.0` (entrada de partida no CHANGELOG, nunca publicada).
-  A primeira versão liberada será calculada a partir dela, por exemplo `0.2.0` se
-  houver algum `feat:`.
+  O commit que marca essa partida está em `bootstrap-sha`, em
+  `release-please-config.json`: o que veio antes dele já é a `0.1.0` e não entra de
+  novo. A primeira versão liberada será calculada só com os commits depois do marco,
+  por exemplo `0.2.0` se houver algum `feat:`. Depois do primeiro release a chave
+  deixa de ter efeito.
 - Antes da 1.0, uma mudança incompatível sobe o **minor** (`0.4.2` → `0.5.0`).
 - Chegar à `1.0.0` é uma decisão sua. Para isso, acrescente
   `"release-as": "1.0.0"` dentro de `packages["."]` em `release-please-config.json`,

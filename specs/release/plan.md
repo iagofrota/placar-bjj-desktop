@@ -91,7 +91,10 @@ arquivo fora dos caminhos da entrega (por isso `scripts/version/` tem
   não abre o PR de release.
 - Mensagem padrão de squash = título do PR.
 - Confirmar que merge commit continua permitido para a promoção `dev → main`.
-- Primeira versão: calculada a partir de `0.1.0` (ex.: `0.2.0` se houver `feat`).
+- Primeira versão: calculada a partir de `0.1.0` (ex.: `0.2.0` se houver `feat`),
+  só com os commits depois de `bootstrap-sha` (o último commit de `dev` antes desta
+  entrega), para o scaffold, que já é a `0.1.0`, não entrar de novo no CHANGELOG. O
+  beta usa o mesmo marco enquanto não houver tag estável.
   Se quiser que a primeira tag seja exatamente `v0.1.0`, usar `release-as` uma vez.
 
 ## Project Structure

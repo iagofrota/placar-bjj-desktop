@@ -54,6 +54,35 @@ test('historico_git_le_commits_desde_a_ultima_tag_estavel', () => {
   assert.deepEqual([...historico.tags].sort(), ['v0.2.0', 'v0.2.1-beta.1']);
 });
 
+test('historico_git_sem_tag_estavel_comeca_no_bootstrap', () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'historico-'));
+  const git = (...args) =>
+    execFileSync('git', args, {
+      cwd: dir,
+      encoding: 'utf8',
+      env: { ...process.env, GIT_AUTHOR_NAME: 'T', GIT_AUTHOR_EMAIL: 't@example.com', GIT_COMMITTER_NAME: 'T', GIT_COMMITTER_EMAIL: 't@example.com', GIT_CONFIG_GLOBAL: '/dev/null', GIT_CONFIG_NOSYSTEM: '1' },
+    }).trim();
+  git('init', '-q', '-b', 'dev');
+  git('commit', '-q', '--allow-empty', '-m', 'feat: scaffold do app desktop');
+  git('commit', '-q', '--allow-empty', '-m', 'chore: marco da 0.1.0');
+  const marco = git('rev-parse', 'HEAD');
+  const config = JSON.parse(fs.readFileSync(path.join(RAIZ_REPO, 'release-please-config.json'), 'utf8'));
+  fs.writeFileSync(path.join(dir, 'release-please-config.json'), JSON.stringify({ ...config, 'bootstrap-sha': marco }));
+  fs.writeFileSync(path.join(dir, '.release-please-manifest.json'), '{ ".": "0.1.0" }');
+  git('add', '.');
+  git('commit', '-q', '-m', 'fix: relógio não pausa ao zerar');
+  const historico = lerHistoricoGit(dir);
+  assert.deepEqual(historico.commits.map((c) => c.message.trim()), ['fix: relógio não pausa ao zerar']);
+  assert.deepEqual(historico.releases, []);
+  assert.equal(historico.tagBase, null);
+});
+
+test('bootstrap_sha_da_config_esta_no_historico', () => {
+  const config = JSON.parse(fs.readFileSync(path.join(RAIZ_REPO, 'release-please-config.json'), 'utf8'));
+  // Sai 0 só se o marco for ancestral do HEAD; um SHA digitado errado reprova aqui.
+  execFileSync('git', ['merge-base', '--is-ancestor', config['bootstrap-sha'], 'HEAD'], { cwd: RAIZ_REPO });
+});
+
 test('cli_versao_beta_imprime_saidas_do_github', async () => {
   const { dir, git } = repoGit();
   const saida = saidaEmMemoria();

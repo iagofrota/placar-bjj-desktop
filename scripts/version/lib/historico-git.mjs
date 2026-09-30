@@ -1,6 +1,6 @@
 // Lê do git local o que o cálculo do beta precisa: tags, a última estável e os commits depois dela.
 import { execFileSync } from 'node:child_process';
-import { versaoDoManifest } from './config.mjs';
+import { bootstrapSha, versaoDoManifest } from './config.mjs';
 import { baseEstavel } from './beta.mjs';
 
 const FIM_DE_COMMIT = '\x1e';
@@ -13,7 +13,10 @@ function git(cwd, args) {
 export function lerHistoricoGit(cwd) {
   const tags = git(cwd, ['tag', '--list']).split('\n').filter(Boolean);
   const base = baseEstavel(versaoDoManifest(cwd), tags);
-  const intervalo = base.tag ? [`${base.tag}..HEAD`] : ['HEAD'];
+  const marco = bootstrapSha(cwd);
+  let intervalo = ['HEAD'];
+  if (base.tag) intervalo = [`${base.tag}..HEAD`];
+  else if (marco) intervalo = [`${marco}..HEAD`];
   const commits = git(cwd, ['log', `--format=%H${SEPARADOR}%B${FIM_DE_COMMIT}`, ...intervalo])
     .split(FIM_DE_COMMIT)
     .map((bloco) => bloco.replace(/^\n/, ''))

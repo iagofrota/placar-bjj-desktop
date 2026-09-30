@@ -28,3 +28,9 @@ export function arquivosDeVersao(raiz) {
     return { caminho: extra.path, tipo: extra.type, jsonpath: extra.jsonpath };
   });
 }
+
+// Marco da versão de partida (0.1.0): enquanto não houver versão publicada, só o que veio
+// depois dele conta. Depois do primeiro release o release-please ignora a chave.
+export function bootstrapSha(raiz) {
+  return lerJson(raiz, ARQUIVO_CONFIG)['bootstrap-sha'] ?? null;
+}

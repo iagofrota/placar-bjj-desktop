@@ -59,6 +59,20 @@ test('titulo_feat_no_pr_de_promocao_soma_um_minor', async () => {
   assert.equal(await versaoDoFixture('promocao-titulo-feat'), '0.2.0');
 });
 
+test('sem_release_publicado_o_historico_comeca_no_bootstrap', async () => {
+  // Sem nenhuma versão publicada, o que veio antes do marco da 0.1.0 (bootstrap-sha) já é a 0.1.0.
+  const config = JSON.parse(fs.readFileSync(path.join(RAIZ_REPO, 'release-please-config.json'), 'utf8'));
+  const marco = config['bootstrap-sha'];
+  assert.match(marco ?? '', /^[0-9a-f]{40}$/, 'a config precisa de bootstrap-sha');
+  const commits = [
+    { sha: 'c2', message: 'fix: relógio não pausa ao zerar' },
+    { sha: marco, message: 'Merge pull request #2 from iagofrota/fix/scaffold-dev-dependencies' },
+    { sha: 'c1', message: 'feat: scaffold do app desktop' },
+  ];
+  const plano = await planejarRelease({ raiz: RAIZ_REPO, commits, versaoPublicada: '0.1.0' });
+  assert.equal(plano.versao, '0.1.1');
+});
+
 test('pr_de_release_atualiza_todos_os_arquivos_de_versao', async () => {
   // Parte da versão real do manifest (sem override), para os arquivos mudarem de fato.
   const raiz = copiarRepoParaTemp();
