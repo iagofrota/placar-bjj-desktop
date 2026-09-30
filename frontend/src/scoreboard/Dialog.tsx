@@ -1,9 +1,13 @@
 /**
- * Diálogo modal mínimo com `role="dialog"`. Ao abrir, move o foco para dentro de
- * si — é isso que faz o atalho de Espaço ser barrado com um diálogo aberto (P6):
- * `event.target.closest('[role="dialog"]')` casa. Fecha no Esc.
+ * Diálogo modal com `role="dialog"`. O conteúdo é portalizado para fora do board
+ * (para não herdar o `inert` que trava o board) e o diálogo se registra no
+ * `ModalProvider`, que aplica esse `inert`. Ao abrir, move o foco para si — com
+ * o resto `inert`, o Tab passa a circular só dentro do diálogo (comportamento
+ * modal da web). Fecha no Esc.
  */
 import { useEffect, useRef, type ReactNode } from "react";
+import { createPortal } from "react-dom";
+import { useModalRegistration } from "./modal";
 
 export function Dialog({
   open,
@@ -22,6 +26,8 @@ export function Dialog({
 }) {
   const panelRef = useRef<HTMLDivElement>(null);
 
+  useModalRegistration(open);
+
   useEffect(() => {
     if (open) {
       panelRef.current?.focus();
@@ -32,7 +38,7 @@ export function Dialog({
     return null;
   }
 
-  return (
+  return createPortal(
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-arena-black/60 p-4"
       onClick={onClose}
@@ -56,6 +62,7 @@ export function Dialog({
         {children && <div className="mt-4">{children}</div>}
         {footer && <div className="mt-6 flex flex-wrap justify-end gap-3">{footer}</div>}
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }

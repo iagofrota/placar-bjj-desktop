@@ -70,3 +70,23 @@ O que este trabalho **NÃO** estabelece (mesmo peso):
   é estrutural (nenhum estado é gravado em disco) e fica no checklist manual.
 - O e2e roda sob Xvfb no CI, sem GPU; a renderização real em telas físicas não é
   exercida aqui.
+
+## Revisão do Codex — dois consertos (pós-primeira entrega)
+
+Dois achados da revisão automática, aprovados pelo PE, ambos dentro da task-spec.
+
+- **P6 — foco preso com diálogo aberto.** O `Dialog` focava o painel mas não prendia
+  o foco: com o diálogo aberto, um Tab levava o foco a um botão do board, e aí o
+  Espaço alternava o relógio e o Enter acionava o botão de trás. Conserto (o
+  recomendado): o conteúdo do diálogo é **portalizado** para fora do board e o board
+  fica **`inert`** enquanto houver diálogo aberto — barra Tab, Espaço e Enter de uma
+  vez, como o modal da web (Radix). Um `ModalProvider` agrega os diálogos abertos.
+  RED→GREEN: `dialogo_aberto_torna_o_board_inert_barrando_foco_atras` (vermelho sem o
+  `inert`, verde com ele) + o e2e `dialogo_aberto_barra_espaco_e_enter_no_board` no
+  binário real.
+- **P2 — relógio não monotônico.** O `SystemClock` usava o relógio de parede do SO;
+  um ajuste da hora no meio da luta congelaria ou encerraria o cronômetro antes da
+  hora, violando o contrato do `Clock` do `placar-core` ("monotônico dentro de uma
+  luta"). Conserto: o `SystemClock` ancora um `Instant` base e devolve
+  `base.elapsed()`. `placar-core` segue somente leitura. Prova: teste de
+  não-decréscimo + contrafactual `rg 'SystemTime' src-tauri/src` **vazio**.

@@ -1,5 +1,5 @@
 import "../test-support/rtl-cleanup";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { translate } from "../i18n/translate";
 import type { BoardView } from "../ipc/types";
@@ -99,6 +99,22 @@ describe("Board", () => {
     const clock = screen.getByRole("button", { name: /^Tempo restante:/ });
     expect(clock).toHaveAttribute("data-urgent", "true");
     expect(clock.className).toContain("text-score-penalty");
+  });
+
+  it("dialogo_aberto_torna_o_board_inert_barrando_foco_atras", async () => {
+    // P6: com um diálogo aberto, Tab não pode alcançar um controle de trás (senão
+    // Espaço alternaria o relógio e Enter acionaria o botão). O board fica `inert`.
+    render(<Board board={boardView()} actions={noopActions()} t={t} />);
+    const board = screen.getByTestId("board");
+    expect(board).not.toHaveAttribute("inert");
+
+    fireEvent.click(screen.getByRole("button", { name: "Encerrar luta" }));
+    expect(await screen.findByRole("dialog")).toBeInTheDocument();
+    expect(board).toHaveAttribute("inert");
+
+    // fechar o diálogo (Esc) devolve a interação ao board
+    fireEvent.keyDown(screen.getByRole("dialog"), { key: "Escape" });
+    await waitFor(() => expect(board).not.toHaveAttribute("inert"));
   });
 
   it("com_relogio_parado_nao_ha_realce", () => {
