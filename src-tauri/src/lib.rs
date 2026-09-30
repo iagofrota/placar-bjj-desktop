@@ -37,7 +37,7 @@ impl AppState {
     fn new() -> Self {
         Self {
             session: Mutex::new(Session::new()),
-            clock: SystemClock,
+            clock: SystemClock::new(),
         }
     }
 }

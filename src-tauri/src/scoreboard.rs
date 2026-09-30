@@ -5,7 +5,7 @@
 //! O tempo real vem de [`SystemClock`]; os testes injetam o `ManualClock` do
 //! `placar-core`, sem `sleep` e sem tocar o relógio do SO.
 
-use std::time::{SystemTime, UNIX_EPOCH};
+use std::time::Instant;
 
 use placar_core::{
     Clock, ClockAdjust, Delta, EndError, EndMethod, Match, ScoreKind, Side, StartError,
@@ -13,18 +13,38 @@ use placar_core::{
 
 use crate::view::StateView;
 
-/// Relógio de parede real, em milissegundos desde a época Unix.
-#[derive(Debug, Default, Clone, Copy)]
-pub struct SystemClock;
+/// Relógio monotônico dentro de uma luta: parte de um `Instant` base criado com
+/// o relógio e conta o decorrido. Ao contrário do relógio de parede do SO, um
+/// ajuste da hora do sistema no meio da luta não faz o cronômetro congelar nem
+/// encerrar antes da hora — e isso honra o contrato de `Clock` do `placar-core`
+/// ("monotônico dentro de uma luta").
+#[derive(Debug, Clone, Copy)]
+pub struct SystemClock {
+    base: Instant,
+}
+
+impl SystemClock {
+    /// Um relógio ancorado no instante atual.
+    #[must_use]
+    pub fn new() -> Self {
+        Self {
+            base: Instant::now(),
+        }
+    }
+}
+
+impl Default for SystemClock {
+    fn default() -> Self {
+        Self::new()
+    }
+}
 
 impl Clock for SystemClock {
     fn now_ms(&self) -> i64 {
-        // Antes da época (relógio muito atrasado) vira 0 — monotônico o
-        // bastante para o cronômetro; o domínio já satura elapsed em 0.
-        SystemTime::now()
-            .duration_since(UNIX_EPOCH)
-            .map(|d| d.as_millis() as i64)
-            .unwrap_or(0)
+        // `Instant` é monotônico: nunca anda para trás, independentemente da
+        // hora do SO. O domínio usa só diferenças de `now_ms`, então a origem
+        // arbitrária (base) não importa.
+        self.base.elapsed().as_millis() as i64
     }
 }
 
@@ -347,8 +367,14 @@ mod tests {
     }
 
     #[test]
-    fn system_clock_avanca_e_e_nao_negativo() {
-        let a = SystemClock.now_ms();
-        assert!(a > 0);
+    fn system_clock_e_monotonico_e_nunca_decresce() {
+        // P2: leituras seguidas nunca andam para trás (imune a ajuste do SO).
+        let clock = SystemClock::new();
+        let a = clock.now_ms();
+        let b = clock.now_ms();
+        let c = clock.now_ms();
+        assert!(a >= 0);
+        assert!(b >= a);
+        assert!(c >= b);
     }
 }
