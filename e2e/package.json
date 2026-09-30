@@ -6,7 +6,8 @@
   "description": "e2e do binário Tauri real via tauri-driver + WebdriverIO",
   "scripts": {
     "test": "wdio run ./wdio.conf.js",
-    "test:layout": "playwright test"
+    "test:layout": "playwright test",
+    "test:layout:native": "wdio run ./wdio.layout.conf.js"
   },
   "devDependencies": {
     "@playwright/test": "^1.56.0",

@@ -90,3 +90,48 @@ Dois achados da revisão automática, aprovados pelo PE, ambos dentro da task-sp
   luta"). Conserto: o `SystemClock` ancora um `Instant` base e devolve
   `base.elapsed()`. `placar-core` segue somente leitura. Prova: teste de
   não-decréscimo + contrafactual `rg 'SystemTime' src-tauri/src` **vazio**.
+
+## Rodada de QA — dois achados Important (T3 e P8 frente b)
+
+A revisão de QA reprovou o PR por dois achados; o resto (P1–P7, P9–P13, T1–T2)
+passou e não foi tocado. P8 foi emendado e aprovado pelo PE antes desta rodada.
+
+- **T3 — cenários Gherkin reais.** Dos 66 `.md` de cenário, 62 eram boilerplate
+  genérico ("o comportamento coberto pelo teste X é exercido…"). Reescritos os 62
+  com `Funcionalidade`/`Cenário`/`Dado`/`Quando`/`Então` descrevendo a **sequência
+  e o assert** de cada teste homônimo (cargo, vitest e e2e), sem template. O 1:1 de
+  nomes foi mantido: 67 testes novos ↔ 67 `.md` (nenhum órfão dos dois lados,
+  conferido por máquina com o mesmo diff do QA, agora incluindo o teste novo de P8).
+- **P8 frente (b) — layout em escala REAL do GTK no binário Tauri real.** A matriz
+  antiga só cobria o Chromium (`deviceScaleFactor`, proxy do WebView2 no Windows).
+  Acrescentado `e2e/layout-native/layout-native.e2e.js` (config `wdio.layout.conf.js`),
+  que roda no **binário Tauri real (WebKitGTK)** sob Xvfb, uma execução por
+  `GDK_SCALE` (1 e 2 = 100% e 200%), nos 4 viewports. A medição é a mesma da frente
+  (a): `getBoundingClientRect()` de cada um dos 26 controles contra o viewport CSS
+  real; nenhum transborda e todos medem ≥ 44 px. O teste registra e **exige** que o
+  `window.devicePixelRatio` seja a escala do `GDK_SCALE` — é o que separa escala
+  real de zoom CSS. Os dois passos entram no job `e2e` do CI; 125% e 150% do GTK no
+  Linux vão para `docs/qa/release-checklist.md` (manual do PE).
+
+### RED→GREEN e provas de detecção (frente b, no binário real local)
+
+- **GREEN.** `GDK_SCALE=1` → `dpr=1` e `GDK_SCALE=2` → `dpr=2`, ambos passam nos 4
+  viewports; botões reais medem 124×91 (marcação) e 124×44 (correção) px, ≥ 44 px;
+  viewports honrados a 1× e 2× (1366×768, 1920×1080, 2560×1440; a altura 500 do
+  viewport baixo resolve para ~560 sob o `minSize`/WM, mas a medição é contra o
+  viewport real, não o pedido).
+- **Mutação A (alvo ≥ 44 px vivo).** `MIN_TARGET` 44→1000: o teste falha listando os
+  26 controles como "< 1000px". Mutante descartado; árvore limpa.
+- **Mutação B (guarda de escala real viva).** Expectativa de `dpr` forçada errada
+  (escala+1): com `GDK_SCALE=2` o teste falha com "devicePixelRatio 2 != escala real
+  3", provando que o `dpr` medido é 2 de verdade (escala real do GTK, não zoom CSS).
+  Mutante descartado; árvore limpa.
+
+### Limite atualizado de P8 (state-the-limit)
+
+- A escala **real do GTK** passa a ser exercida no binário real **só a 100% e 200%**
+  (`GDK_SCALE=1/2`); 125% e 150% ficam no checklist manual. A frente (a) segue
+  emulada no Chromium. O **DPI real do SO** (Windows) e a janela entre monitores
+  continuam manuais. O e2e roda sob **Xvfb sem GPU** — a renderização em tela física
+  não é exercida. A prova local usou um `WebKitWebDriver` do webkit2gtk-4.1 contra a
+  `libwebkit2gtk-4.1.so.0` do sistema; no CI o driver vem do pacote `webkit2gtk-driver`.
