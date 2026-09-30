@@ -1,3 +1,4 @@
+import "../test-support/rtl-cleanup";
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import App from "../App";

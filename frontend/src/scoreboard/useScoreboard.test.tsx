@@ -1,3 +1,4 @@
+import "../test-support/rtl-cleanup";
 import { act, renderHook, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { FakeClient, SETUP_STATE } from "../test-support/fake-client";

@@ -6,11 +6,11 @@
  * REAL com um estado estático; nenhuma regra, nenhum IPC. Fora do bundle do app.
  */
 import ReactDOM from "react-dom/client";
-import "./index.css";
-import { LocaleProvider, useLocale } from "./i18n/LocaleContext";
-import type { BoardView } from "./ipc/types";
-import { Board, type BoardActions } from "./scoreboard/Board";
-import { Header } from "./scoreboard/Header";
+import "../index.css";
+import { LocaleProvider, useLocale } from "../i18n/LocaleContext";
+import type { BoardView } from "../ipc/types";
+import { Board, type BoardActions } from "../scoreboard/Board";
+import { Header } from "../scoreboard/Header";
 
 const SAMPLE_BOARD: BoardView = {
   white: { name: "Ana Souza", points: 6, advantages: 1, penalties: 0, penalty_alert: false },

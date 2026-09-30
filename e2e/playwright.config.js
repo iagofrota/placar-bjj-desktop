@@ -20,7 +20,7 @@ export default defineConfig({
   webServer: {
     command: `npm run dev -- --port ${PORT} --strictPort`,
     cwd: "../frontend",
-    url: `http://localhost:${PORT}/layout-harness.html`,
+    url: `http://localhost:${PORT}/src/layout-harness/index.html`,
     timeout: 120000,
     reuseExistingServer: !process.env.CI,
   },

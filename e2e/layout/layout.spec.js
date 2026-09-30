@@ -24,7 +24,7 @@ async function measure(browser, vp, scale) {
     deviceScaleFactor: scale,
   });
   const page = await context.newPage();
-  await page.goto("/layout-harness.html");
+  await page.goto("/src/layout-harness/index.html");
   await page.waitForSelector('[data-testid="board"] button');
   const result = await page.evaluate(
     ({ min, eps }) => {
