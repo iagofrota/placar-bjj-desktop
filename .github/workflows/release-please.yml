@@ -1,0 +1,84 @@
+name: release-please
+
+# Portão "liberar": em main, o release-please mantém aberto um PR de release com o
+# bump de versão e o CHANGELOG. Quando o mantenedor faz o merge desse PR, este mesmo workflow
+# cria a tag vX.Y.Z e o GitHub Release. Veja docs/release/versioning.md.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: release-please
+  cancel-in-progress: false
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    outputs:
+      release_created: ${{ steps.release.outputs.release_created }}
+      tag_name: ${{ steps.release.outputs.tag_name }}
+      version: ${{ steps.release.outputs.version }}
+      sha: ${{ steps.release.outputs.sha }}
+      prs_created: ${{ steps.release.outputs.prs_created }}
+      pr: ${{ steps.release.outputs.pr }}
+    steps:
+      - id: release
+        uses: googleapis/release-please-action@45996ed1f6d02564a971a2fa1b5860e934307cf7 # v5.0.0 (release-please 17.6.0)
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          target-branch: main
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
+
+  # PR aberto com o GITHUB_TOKEN não dispara o CI. Então a sincronia de versão roda
+  # aqui, sobre a branch do PR de release, e o resultado vira um status no próprio PR.
+  sincronia-pr-de-release:
+    needs: release-please
+    if: needs.release-please.outputs.prs_created == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      statuses: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ fromJSON(needs.release-please.outputs.pr).headBranchName }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: scripts/version/package-lock.json
+      - run: npm ci
+        working-directory: scripts/version
+      - id: sincronia
+        continue-on-error: true
+        run: npm run sincronia
+        working-directory: scripts/version
+      - name: Status sincronia-de-versao no PR de release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RESULTADO: ${{ steps.sincronia.outcome }}
+        run: |
+          if [ "$RESULTADO" = "success" ]; then estado=success; texto="Versão em sincronia"; else estado=failure; texto="Versão fora de sincronia: veja o log"; fi
+          gh api "repos/$GITHUB_REPOSITORY/statuses/$(git rev-parse HEAD)" \
+            -f state="$estado" -f context=sincronia-de-versao -f description="$texto" \
+            -f target_url="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+          [ "$estado" = success ]
+
+  # Ponto de extensão do build de release (entrega de distribuição):
+  # uma tag criada com o GITHUB_TOKEN não dispara outro workflow, então o build entra
+  # aqui, no mesmo workflow, como um job que chama release.yml via workflow_call:
+  #
+  #   build:
+  #     needs: release-please
+  #     if: needs.release-please.outputs.release_created == 'true'
+  #     uses: ./.github/workflows/release.yml
+  #     with:
+  #       tag: ${{ needs.release-please.outputs.tag_name }}
+  #       prerelease: false
+  #     secrets: inherit

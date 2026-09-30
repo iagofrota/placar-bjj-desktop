@@ -1,0 +1,10 @@
+{
+  "descricao": "Mudança incompatível declarada no rodapé BREAKING CHANGE, antes da 1.0.",
+  "versaoPublicada": "0.1.0",
+  "commits": [
+    {
+      "sha": "c1",
+      "message": "refactor: reorganiza as configurações\n\nBREAKING CHANGE: o arquivo de configuração antigo deixa de ser lido"
+    }
+  ]
+}

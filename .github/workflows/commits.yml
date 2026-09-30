@@ -1,0 +1,51 @@
+name: commits
+
+# O título do PR para dev vira a mensagem do commit em dev (merge por squash), e a
+# versão do app é calculada dessas mensagens. Por isso ele precisa ser conventional
+# commit. `edited` faz o check rodar de novo quando só o título muda.
+on:
+  pull_request:
+    branches: [dev]
+    types: [opened, edited, synchronize, reopened]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: commits-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  commits:
+    name: commits
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Título do PR em conventional commits
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: node scripts/version/bin/checar-titulo-pr.mjs
+
+  versao:
+    name: versao (sincronia e cálculo)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: scripts/version
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # o teste do bootstrap-sha confere que o marco está no histórico
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: scripts/version/package-lock.json
+      - run: npm ci
+      - name: Testes do cálculo de versão (com cobertura)
+        run: npm test
+      - name: Sincronia de versão
+        run: npm run sincronia

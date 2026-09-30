@@ -1,0 +1,10 @@
+{
+  "descricao": "Promoção dev → main por squash: um commit só, com os commits de dev virando lista no corpo.",
+  "versaoPublicada": "0.1.0",
+  "commits": [
+    {
+      "sha": "s1",
+      "message": "chore: promove dev para main (#9)\n\n* feat: seletor de idioma\n\n* fix: relógio não pausa ao zerar"
+    }
+  ]
+}

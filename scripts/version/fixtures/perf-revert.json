@@ -1,0 +1,8 @@
+{
+  "descricao": "Só desempenho e reversão: aparecem no CHANGELOG e geram patch.",
+  "versaoPublicada": "0.1.0",
+  "commits": [
+    { "sha": "c2", "message": "revert: desfaz o beep em loop" },
+    { "sha": "c1", "message": "perf: renderiza o relógio sem recriar o componente" }
+  ]
+}

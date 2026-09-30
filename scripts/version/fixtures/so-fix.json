@@ -1,0 +1,14 @@
+{
+  "descricao": "Desde a última versão só entraram correções.",
+  "versaoPublicada": "0.1.0",
+  "commits": [
+    {
+      "sha": "c2",
+      "message": "fix: relógio não pausa ao zerar"
+    },
+    {
+      "sha": "c1",
+      "message": "fix(placar): punição não fica negativa"
+    }
+  ]
+}

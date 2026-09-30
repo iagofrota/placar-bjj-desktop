@@ -1,0 +1,14 @@
+{
+  "descricao": "Promoção por merge commit com título feat no PR: o corpo do merge vira mais um commit.",
+  "versaoPublicada": "0.1.0",
+  "commits": [
+    {
+      "sha": "m1",
+      "message": "Merge pull request #9 from iagofrota/dev\n\nfeat: lote de setembro"
+    },
+    {
+      "sha": "c1",
+      "message": "fix: relógio não pausa ao zerar"
+    }
+  ]
+}

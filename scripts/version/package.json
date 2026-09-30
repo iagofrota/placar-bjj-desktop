@@ -1,0 +1,18 @@
+{
+  "name": "placar-bjj-desktop-versao",
+  "private": true,
+  "description": "Cálculo de versão (release-please em dry-run), sincronia de versão e checagem de título de PR",
+  "type": "module",
+  "engines": {
+    "node": ">=22.8.0"
+  },
+  "scripts": {
+    "test": "node --test --experimental-test-coverage --test-coverage-lines=80 --test-coverage-include='lib/**' --test-coverage-include='bin/**' 'test/*.test.mjs'",
+    "sincronia": "node bin/checar-sincronia.mjs"
+  },
+  "devDependencies": {
+    "jsonpath-plus": "10.4.0",
+    "release-please": "17.6.0",
+    "yaml": "2.9.1"
+  }
+}
