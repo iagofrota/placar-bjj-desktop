@@ -1,0 +1,64 @@
+name: beta
+
+# Canal beta: o mantenedor dispara à mão, a partir de dev (Actions → beta → Run workflow).
+# Cria o pre-release vX.Y.Z-beta.N, onde X.Y.Z é a próxima versão estável calculada
+# dos commits desde a última versão estável. O beta nunca vira "latest".
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: beta
+  cancel-in-progress: false
+
+jobs:
+  beta:
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.calculo.outputs.tag }}
+      version: ${{ steps.calculo.outputs.version }}
+      prerelease: 'true'
+    steps:
+      - name: Só a partir de dev
+        run: |
+          if [ "$GITHUB_REF" != "refs/heads/dev" ]; then
+            echo "::error::O beta só sai de dev (disparado em $GITHUB_REF)."
+            exit 1
+          fi
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: scripts/version/package-lock.json
+      - run: npm ci
+        working-directory: scripts/version
+      - id: calculo
+        name: Próxima versão beta
+        run: node scripts/version/bin/versao-beta.mjs >> "$GITHUB_OUTPUT"
+      - name: Cria o pre-release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ steps.calculo.outputs.tag }}
+          BASE_TAG: ${{ steps.calculo.outputs.base_tag }}
+        run: |
+          inicio=()
+          if [ -n "$BASE_TAG" ]; then inicio=(--notes-start-tag "$BASE_TAG"); fi
+          gh release create "$TAG" --target "$GITHUB_SHA" --title "$TAG" \
+            --prerelease --latest=false --generate-notes "${inicio[@]}"
+
+  # Ponto de extensão do build de release (entrega de distribuição): o release criado
+  # com o GITHUB_TOKEN não dispara outro workflow, então o build entra aqui:
+  #
+  #   build:
+  #     needs: beta
+  #     uses: ./.github/workflows/release.yml
+  #     with:
+  #       tag: ${{ needs.beta.outputs.tag }}
+  #       prerelease: true
+  #     secrets: inherit
