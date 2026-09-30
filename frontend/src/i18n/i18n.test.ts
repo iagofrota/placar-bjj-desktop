@@ -20,7 +20,7 @@ function without(dictionary: Dictionary, path: string): Dictionary {
 }
 
 describe("i18n do placar", () => {
-  it("dicionarios_pt_BR_en_es_tem_todas_as_chaves_do_placar_e_do_app", () => {
+  it("dicionarios_pt_BR_en_es_tem_todas_as_chaves_do_placar", () => {
     for (const locale of LOCALES) {
       expect(missingKeys(DICTIONARIES[locale], REQUIRED_KEYS), locale).toEqual([]);
       expect(extraKeys(DICTIONARIES[locale], REQUIRED_KEYS), locale).toEqual([]);

@@ -27,7 +27,7 @@ export function Board({
   t: TFn;
 }) {
   return (
-    <div className="flex min-h-0 flex-1 flex-col">
+    <div data-testid="board" className="flex min-h-0 flex-1 flex-col">
       <div className="flex min-h-0 flex-1 flex-col sm:flex-row">
         <SidePanel
           side="white"

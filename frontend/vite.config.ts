@@ -45,6 +45,8 @@ export default defineConfig(() => ({
         // Cola Tauri (só roda com webview real, coberta pelo e2e) e infra de teste.
         "src/ipc/tauri-client.ts",
         "src/test-support/**",
+        // Página só de layout (P8), exercitada pelo Playwright, não pelo vitest.
+        "src/layout-harness.tsx",
       ],
       thresholds: {
         lines: 80,

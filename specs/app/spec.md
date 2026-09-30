@@ -6,8 +6,8 @@
 
 **Status**: Approved
 
-**Input**: Task Spec aprovada pelo PE antes do início da implementação
-(`.aipe/journeys/.../task-specs/placar-bjj-desktop.md`, tarefa `app`, onda 3).
+**Input**: Especificação da tarefa `app` (onda 3), aprovada pelo PE antes do início
+da implementação.
 
 ## Objetivo
 
