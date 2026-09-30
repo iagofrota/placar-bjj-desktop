@@ -91,6 +91,14 @@ impl Match {
         blue_name: &str,
         duration_minutes: f64,
     ) -> Result<Match, StartError> {
+        // `start` só é uma transição válida a partir do Setup — em `avulso.tsx`
+        // o `onStart` só existe no estágio setup (`521-531`). Fora dele, no-op
+        // preservando o estado, para uma ação de start repetida ou fora de ordem
+        // não descartar uma luta em curso ou encerrada.
+        if !self.is_setup() {
+            return Ok(self.clone());
+        }
+
         if !can_start(white_name, blue_name, duration_minutes) {
             return Err(StartError::InvalidSetup);
         }

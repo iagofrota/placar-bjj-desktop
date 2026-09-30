@@ -18,4 +18,5 @@ Funcionalidade: Voltar ao Setup e ignorar controles fora do board
     Então marcar, dar toggle, ajustar e tick não mudam o estado
     Dado uma luta encerrada
     Então marcar, dar toggle, ajustar e tick não mudam o estado
+    E iniciar (start) uma luta em curso ou encerrada é no-op (só transiciona do Setup)
 ```

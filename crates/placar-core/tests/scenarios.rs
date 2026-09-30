@@ -412,8 +412,13 @@ fn c10_cancelar_nova_luta_e_fora_do_board() {
     assert_eq!(setup.cancel(), setup);
     assert_eq!(setup.new_bout(), setup);
 
+    // `start` só transiciona a partir do Setup: no board ou no encerramento é
+    // no-op, sem descartar a luta em curso (avulso.tsx:521-531).
+    assert_eq!(m.start("Outro", "Outro2", 3.0), Ok(m.clone()));
+
     // Idem no encerramento: os controles e o cancelar são no-op.
     assert!(ended.board().is_none());
+    assert_eq!(ended.start("Outro", "Outro2", 3.0), Ok(ended.clone()));
     assert_eq!(
         ended.mark(Side::White, ScoreKind::Point2, Delta::Add),
         ended
